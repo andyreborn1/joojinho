@@ -8,6 +8,10 @@ public class Player extends Entity {
 
     private State state;
 
+    private boolean right;
+
+    private boolean left;
+
     public Player(String name, double x, double y, double speed,
                   EntitySprites entitySprites) {
         super(name, x, y, speed, entitySprites);
@@ -25,22 +29,6 @@ public class Player extends Entity {
         }
     }
 
-    public void shot() {
-        double xx = this.getX();
-        double yy = this.getY() - 10;
-
-        Game.entities.add(new Bullet("bullet", xx, yy, 2,
-                Game.normalBullet));
-    }
-
-    public void buffShot() {
-        double xx = this.getX();
-        double yy = this.getY() - 10;
-
-        Game.entities.add(new Bullet("buff_bullet", xx, yy, 2,
-                Game.buffedBullet));
-    }
-
     public State getState() {
         return state;
     }
@@ -48,4 +36,14 @@ public class Player extends Entity {
     public void changeState(State state) {
         this.state = state;
     }
+
+    public void setRight(boolean right) {
+        this.right = right;
+    }
+
+    public void setLeft(boolean left) {
+        this.left = left;
+    }
+
+
 }

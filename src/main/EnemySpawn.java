@@ -20,14 +20,14 @@ public class EnemySpawn {
 
             Enemy enemy = new Enemy("small_enemy",
                     rand.nextInt(Game.WIDTH - 16), -16
-                    , rand.nextInt(3) + 1,
+                    , rand.nextInt(3) + 1, 3,
                     Game.enemyEntitySprite);
 
             Game.entities.add(enemy);
 
-            if (time % 1000 == 0) {
+            if (time % 200 == 0) {
                 Game.entities.add(new Enemy("medium_enemy",
-                        rand.nextInt(Game.WIDTH - 32), -16, 1,
+                        rand.nextInt(Game.WIDTH - 32), -16, 1, 5,
                         Game.mediumEnemyEntitySprite));
             }
         }

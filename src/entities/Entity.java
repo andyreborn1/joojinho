@@ -2,7 +2,6 @@ package entities;
 
 
 import java.awt.*;
-import java.util.Comparator;
 
 public class Entity {
     private final String name;
@@ -28,18 +27,16 @@ public class Entity {
     }
 
 
-    public static Comparator<Entity> nodeSorter = new Comparator<Entity>() {
+    public static boolean isColidding(Entity e1, Entity e2) {
+        Rectangle e1Mask = new Rectangle((int) e1.getX(), (int) e1.getY(),
+                e1.entitySprites.sprite.getWidth(),
+                e1.entitySprites.sprite.getHeight());
+        Rectangle e2Mask = new Rectangle((int) e2.getX(), (int) e2.getY(),
+                e2.entitySprites.sprite.getWidth(),
+                e2.entitySprites.sprite.getHeight());
 
-        @Override
-        public int compare(Entity n0, Entity n1) {
-            if (n1.depth < n0.depth)
-                return +1;
-            if (n1.depth > n0.depth)
-                return -1;
-            return 0;
-        }
-
-    };
+        return e1Mask.intersects(e2Mask);
+    }
 
     public double getX() {
         return x;

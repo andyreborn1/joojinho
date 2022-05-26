@@ -16,7 +16,7 @@ public class BuffState extends State {
         double xx = player.getX();
         double yy = player.getY() - 10;
 
-        Game.entities.add(new Bullet("buff_bullet", xx, yy, 2,
+        Game.entities.add(new Bullet("buff_bullet", xx, yy, 2, 3,
                 Game.buffedBullet));
     }
 

@@ -33,11 +33,13 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public static Spritesheet smallEnemySprite;
     public static Spritesheet mediumEnemySprite;
     public static Spritesheet bullets;
+    public static Spritesheet explosion;
     public static Player player;
     public static EntitySprites mediumEnemyEntitySprite;
     public static EntitySprites enemyEntitySprite;
     public static EntitySprites normalBullet;
     public static EntitySprites buffedBullet;
+    public static EntitySprites explosionES;
 
     EnemySpawn enemySpawn;
 
@@ -52,6 +54,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         smallEnemySprite = new Spritesheet("/spritesheets/enemy-small.png");
         mediumEnemySprite = new Spritesheet("/spritesheets/enemy-medium.png");
         bullets = new Spritesheet("/spritesheets/laser-bolts.png");
+        explosion = new Spritesheet("/spritesheets/explosion.png");
 
         enemySpawn = new EnemySpawn();
 
@@ -60,6 +63,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
                 "small_enemy", smallEnemySprite.getSprite(0, 0, 16, 16));
         mediumEnemyEntitySprite = EntityFactory.getSprite(
                 "medium_enemy", mediumEnemySprite.getSprite(0, 0, 32, 16));
+
+        explosionES = EntityFactory.getSprite("explosion",
+                explosion.getSprite(0, 0, 16, 16));
 
         normalBullet = EntityFactory.getSprite("normal_bullet",
                 bullets.getSprite(0, 0, 12, 12));
@@ -74,7 +80,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
     }
 
     public void initFrame() {
-        frame = new JFrame("Space Invaders");
+        frame = new JFrame("Jogo de Navinha");
         frame.add(this);
         frame.setResizable(false);
         frame.pack();

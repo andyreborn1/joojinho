@@ -15,7 +15,7 @@ public class NormalState extends State {
         double xx = player.getX();
         double yy = player.getY() - 10;
 
-        Game.entities.add(new Bullet("bullet", xx, yy, 2,
+        Game.entities.add(new Bullet("bullet", xx, yy, 2, 1,
                 Game.normalBullet));
     }
 }
