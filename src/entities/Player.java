@@ -29,6 +29,11 @@ public class Player extends Entity {
         }
     }
 
+    @Override
+    public Entity clone() {
+        return null;
+    }
+
     public State getState() {
         return state;
     }

@@ -19,4 +19,9 @@ public class Bullet extends Entity {
             Game.entities.remove(this);
         }
     }
+
+    @Override
+    public Entity clone() {
+        return null;
+    }
 }

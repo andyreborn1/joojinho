@@ -11,6 +11,10 @@ public class Enemy extends Entity {
         this.life = life;
     }
 
+    public Enemy(Entity e) {
+        super(e);
+    }
+
     public void tick() {
         this.down();
         if (getY() > Game.HEIGHT + 16) {
@@ -20,19 +24,30 @@ public class Enemy extends Entity {
         for (int i = 0; i < Game.entities.size(); i++) {
             Entity e = Game.entities.get(i);
 
-            if(e instanceof Bullet){
-                if(Entity.isColidding(this, e)){
+            if (e instanceof Bullet) {
+                if (Entity.isColidding(this, e)) {
                     Game.entities.remove(e);
-                    life-=((Bullet) e).damage;
+                    life -= ((Bullet) e).damage;
 
-                    if(this.life<1){
+                    if (this.life < 1) {
                         Explosion explosion = new Explosion("explosion",
-                                this.getX(), this.getY(), 0,Game.explosionES);
+                                this.getX(), this.getY(), 0, Game.explosionES);
                         Game.entities.add(explosion);
                         Game.entities.remove(this);
                     }
                 }
             }
         }
+    }
+
+    @Override
+    public Entity clone() {
+        Enemy e = new Enemy(this);
+        e.setLife(this.life);
+        return e;
+    }
+
+    public void setLife(int life) {
+        this.life = life;
     }
 }

@@ -56,7 +56,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
         bullets = new Spritesheet("/spritesheets/laser-bolts.png");
         explosion = new Spritesheet("/spritesheets/explosion.png");
 
-        enemySpawn = new EnemySpawn();
 
         EntitySprites es = EntityFactory.getSprite("player", playerSprite.getSprite(16 * 2, 0, 16, 24));
         enemyEntitySprite = EntityFactory.getSprite(
@@ -75,6 +74,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
         player = new Player("player", Game.WIDTH / 2, Game.HEIGHT - 40, 3,
                 es);
+        enemySpawn = new EnemySpawn();
 
         entities.add(player);
     }
@@ -111,9 +111,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     public void tick() {
         enemySpawn.tick();
-//        for (Entity e : entities) {
-//            e.tick();
-//        }
+
         for (int i = 0; i < entities.size(); i++) {
             Entity e = entities.get(i);
             e.tick();
@@ -129,11 +127,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
         Graphics g = image.getGraphics();
         g.setColor(new Color(0, 0, 0));
         g.fillRect(0, 0, WIDTH, HEIGHT);
-
-//        Collections.sort(entities,Entity.nodeSorter);
-//        for (Entity e : entities) {
-//            e.render(g);
-//        }
 
         for (int i = 0; i < entities.size(); i++) {
             Entity e = entities.get(i);

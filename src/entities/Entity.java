@@ -3,14 +3,14 @@ package entities;
 
 import java.awt.*;
 
-public class Entity {
+public abstract class Entity {
     private final String name;
     private double x;
     private double y;
     private double speed;
-    public int depth;
 
     private EntitySprites entitySprites;
+
 
     public Entity(String name, double x, double y, double speed,
                   EntitySprites entitySprites) {
@@ -19,6 +19,14 @@ public class Entity {
         this.y = y;
         this.speed = speed;
         this.entitySprites = entitySprites;
+    }
+
+    public Entity(Entity e) {
+        this.name = e.name;
+        this.x = e.x;
+        this.y = e.y;
+        this.speed = e.speed;
+        this.entitySprites = e.entitySprites;
     }
 
     public void render(Graphics graphics) {
@@ -38,28 +46,9 @@ public class Entity {
         return e1Mask.intersects(e2Mask);
     }
 
-    public double getX() {
-        return x;
-    }
+    public abstract void tick();
 
-    public double getY() {
-        return y;
-    }
-
-    public double getSpeed() {
-        return speed;
-    }
-
-    public void setX(double x) {
-        this.x = x;
-    }
-
-    public void setY(double y) {
-        this.y = y;
-    }
-
-    public void tick() {
-    }
+    public abstract Entity clone();
 
     public void left() {
         x += speed;
@@ -75,5 +64,33 @@ public class Entity {
 
     public void down() {
         y += speed;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
+    public void setEntitySprites(EntitySprites entitySprites) {
+        this.entitySprites = entitySprites;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
     }
 }

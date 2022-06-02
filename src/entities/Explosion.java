@@ -45,6 +45,11 @@ public class Explosion extends Entity {
         }
     }
 
+    @Override
+    public Entity clone() {
+        return null;
+    }
+
     public void render(Graphics g) {
         g.drawImage(explosionSprites[curAnimation].sprite, (int) this.getX(),
                 (int) this.getY(),
