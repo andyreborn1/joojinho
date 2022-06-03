@@ -62,8 +62,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
         EntitySprites player2 = EntityFactory.getSprite("player2",
                 playerSprite.getSprite(16 * 2, 24, 16, 24));
 
-        enemyEntitySprite = EntityFactory.getSprite(
-                "small_enemy", smallEnemySprite.getSprite(0, 0, 16, 16));
         mediumEnemyEntitySprite = EntityFactory.getSprite(
                 "medium_enemy", mediumEnemySprite.getSprite(0, 0, 32, 16));
 
@@ -75,6 +73,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
         player = new Player("player", Game.WIDTH / 2, Game.HEIGHT - 40, 3,
                 new EntitySprites[]{player1, player2});
+
         enemySpawn = new EnemySpawn();
 
         entities.add(player);
@@ -111,7 +110,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
     }
 
     public void tick() {
-//        enemySpawn.tick();
+        enemySpawn.tick();
 
         for (int i = 0; i < entities.size(); i++) {
             Entity e = entities.get(i);

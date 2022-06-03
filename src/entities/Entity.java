@@ -90,4 +90,8 @@ public abstract class Entity {
     public void setY(double y) {
         this.y = y;
     }
+
+    public void setEntitySprites(EntitySprites[] entitySprites) {
+        this.entitySprites = entitySprites;
+    }
 }

@@ -2,10 +2,9 @@ package entities;
 
 import main.Game;
 
-import java.awt.*;
-
 public class Enemy extends Entity {
     public int life;
+    private int frames = 0;
 
     public Enemy(String name, double x, double y, double speed, int life,
                  EntitySprites[] entitySprites) {
@@ -17,15 +16,21 @@ public class Enemy extends Entity {
         super(e);
     }
 
-    @Override
-    public void render(Graphics graphics) {
-
-    }
-
     public void tick() {
         this.down();
         if (getY() > Game.HEIGHT + 16) {
             Game.entities.remove(this);
+        }
+
+        frames++;
+        int maxFrames = 7;
+
+        if (frames == maxFrames) {
+            frames = 0;
+            index++;
+            int maxIndex = entitySprites.length-1;
+            if (index > maxIndex)
+                index = 0;
         }
 
         for (int i = 0; i < Game.entities.size(); i++) {
@@ -36,16 +41,31 @@ public class Enemy extends Entity {
                     Game.entities.remove(e);
                     life -= ((Bullet) e).damage;
 
-//                    if (this.life < 1) {
-//                        Explosion explosion = new Explosion("explosion",
-//                                this.getX(), this.getY(), 0, Game.explosionES);
-//                        Game.entities.add(explosion);
-//                        Game.entities.remove(this);
-//                    }
+                    if (this.life < 1) {
+                        Explosion explosion = new Explosion("explosion",
+                                x, y, 0,
+                                new EntitySprites[]{EntityFactory.getSprite("exp0",
+                                        Game.explosion.getSprite(0, 0, 16,
+                                                16)),
+                                        EntityFactory.getSprite("exp1",
+                                                Game.explosion.getSprite(16,
+                                                        0, 16, 16)),
+                                        EntityFactory.getSprite("exp2",
+                                                Game.explosion.getSprite(16 * 2, 0, 16, 16)),
+                                        EntityFactory.getSprite("exp3",
+                                                Game.explosion.getSprite(16 * 3, 0, 16, 16)),
+                                        EntityFactory.getSprite("exp4",
+                                                Game.explosion.getSprite(16 * 4, 0, 16, 16))});
+
+                        Game.entities.add(explosion);
+                        Game.entities.remove(this);
+                    }
                 }
             }
+//        }
         }
     }
+
 
     @Override
     public Entity clone() {

@@ -35,7 +35,7 @@ public class Player extends Entity {
         if (frames == maxFrames) {
             frames = 0;
             index++;
-            int maxIndex = 1;
+            int maxIndex = entitySprites.length-1;
             if (index > maxIndex)
                 index = 0;
         }
