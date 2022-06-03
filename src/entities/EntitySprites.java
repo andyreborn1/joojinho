@@ -10,7 +10,7 @@ public class EntitySprites {
         this.sprite = sprite;
     }
 
-    public void render(String name, Graphics graphics, double x, double y) {
+    public void render(Graphics graphics, double x, double y) {
         graphics.drawImage(this.sprite, (int) x, (int) y, null);
     }
 }

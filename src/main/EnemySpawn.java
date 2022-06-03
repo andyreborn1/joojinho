@@ -11,8 +11,8 @@ public class EnemySpawn {
     Enemy prototype;
 
     public EnemySpawn() {
-        prototype = new Enemy("prototipo",
-                10, -16, 1, 2, Game.enemyEntitySprite);
+//        prototype = new Enemy("prototipo",
+//                10, -16, 1, 2, Game.enemyEntitySprite);
 //        Game.entities.add(enemy);
     }
 
@@ -44,7 +44,7 @@ public class EnemySpawn {
                 Enemy medium = (Enemy) prototype.clone();
                 medium.setX(rand.nextInt(Game.WIDTH - 32));
                 medium.setLife(5);
-                medium.setEntitySprites(Game.mediumEnemyEntitySprite);
+//                medium.setEntitySprites(Game.mediumEnemyEntitySprite);
                 System.out.println(time);
                 Game.entities.add(medium);
             }

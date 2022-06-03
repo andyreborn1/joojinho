@@ -5,15 +5,17 @@ import java.awt.*;
 
 public abstract class Entity {
     private final String name;
-    private double x;
-    private double y;
-    private double speed;
+    protected double x;
+    protected double y;
+    protected double speed;
 
-    private EntitySprites entitySprites;
+    protected int index = 0;
+
+    protected EntitySprites[] entitySprites;
 
 
     public Entity(String name, double x, double y, double speed,
-                  EntitySprites entitySprites) {
+                  EntitySprites[] entitySprites) {
         this.name = name;
         this.x = x;
         this.y = y;
@@ -29,19 +31,18 @@ public abstract class Entity {
         this.entitySprites = e.entitySprites;
     }
 
-    public void render(Graphics graphics) {
-        entitySprites.render(name, graphics, (int) this.getX(),
-                (int) this.getY());
+    public void render(Graphics graphics){
+        entitySprites[index].render(graphics, x, y);
     }
-
 
     public static boolean isColidding(Entity e1, Entity e2) {
         Rectangle e1Mask = new Rectangle((int) e1.getX(), (int) e1.getY(),
-                e1.entitySprites.sprite.getWidth(),
-                e1.entitySprites.sprite.getHeight());
+                e1.entitySprites[0].sprite.getWidth(),
+                e1.entitySprites[0].sprite.getHeight());
+
         Rectangle e2Mask = new Rectangle((int) e2.getX(), (int) e2.getY(),
-                e2.entitySprites.sprite.getWidth(),
-                e2.entitySprites.sprite.getHeight());
+                e2.entitySprites[0].sprite.getWidth(),
+                e2.entitySprites[0].sprite.getHeight());
 
         return e1Mask.intersects(e2Mask);
     }
@@ -80,10 +81,6 @@ public abstract class Entity {
 
     public void setSpeed(double speed) {
         this.speed = speed;
-    }
-
-    public void setEntitySprites(EntitySprites entitySprites) {
-        this.entitySprites = entitySprites;
     }
 
     public void setX(double x) {

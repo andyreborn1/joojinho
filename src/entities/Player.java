@@ -9,11 +9,12 @@ public class Player extends Entity {
     private State state;
 
     private boolean right;
-
     private boolean left;
 
+    private int frames = 0;
+
     public Player(String name, double x, double y, double speed,
-                  EntitySprites entitySprites) {
+                  EntitySprites[] entitySprites) {
         super(name, x, y, speed, entitySprites);
 
         this.state = new NormalState(this);
@@ -26,6 +27,17 @@ public class Player extends Entity {
 
         if (getX() < 0) {
             setX(0);
+        }
+
+        frames++;
+        int maxFrames = 7;
+
+        if (frames == maxFrames) {
+            frames = 0;
+            index++;
+            int maxIndex = 1;
+            if (index > maxIndex)
+                index = 0;
         }
     }
 
@@ -49,6 +61,4 @@ public class Player extends Entity {
     public void setLeft(boolean left) {
         this.left = left;
     }
-
-
 }

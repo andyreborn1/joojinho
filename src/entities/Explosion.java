@@ -12,7 +12,8 @@ public class Explosion extends Entity {
 
     public EntitySprites[] explosionSprites = new EntitySprites[5];
 
-    public Explosion(String name, double x, double y, double speed, EntitySprites entitySprites) {
+    public Explosion(String name, double x, double y, double speed,
+                     EntitySprites[] entitySprites) {
         super(name, x, y, speed, entitySprites);
         explosionSprites[0] = EntityFactory.getSprite("exp0",
                 Game.explosion.getSprite(0, 0, 16, 16));

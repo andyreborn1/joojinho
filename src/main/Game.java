@@ -57,7 +57,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
         explosion = new Spritesheet("/spritesheets/explosion.png");
 
 
-        EntitySprites es = EntityFactory.getSprite("player", playerSprite.getSprite(16 * 2, 0, 16, 24));
+        EntitySprites player1 = EntityFactory.getSprite("player",
+                playerSprite.getSprite(16 * 2, 0, 16, 24));
+        EntitySprites player2 = EntityFactory.getSprite("player2",
+                playerSprite.getSprite(16 * 2, 24, 16, 24));
+
         enemyEntitySprite = EntityFactory.getSprite(
                 "small_enemy", smallEnemySprite.getSprite(0, 0, 16, 16));
         mediumEnemyEntitySprite = EntityFactory.getSprite(
@@ -66,14 +70,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
         explosionES = EntityFactory.getSprite("explosion",
                 explosion.getSprite(0, 0, 16, 16));
 
-        normalBullet = EntityFactory.getSprite("normal_bullet",
-                bullets.getSprite(0, 0, 12, 12));
-
         buffedBullet = EntityFactory.getSprite("buff_bullet",
                 bullets.getSprite(0, 12, 12, 20));
 
         player = new Player("player", Game.WIDTH / 2, Game.HEIGHT - 40, 3,
-                es);
+                new EntitySprites[]{player1, player2});
         enemySpawn = new EnemySpawn();
 
         entities.add(player);
@@ -110,7 +111,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
     }
 
     public void tick() {
-        enemySpawn.tick();
+//        enemySpawn.tick();
 
         for (int i = 0; i < entities.size(); i++) {
             Entity e = entities.get(i);
