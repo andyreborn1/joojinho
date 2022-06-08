@@ -32,11 +32,6 @@ public class Bullet extends Entity {
         }
     }
 
-//    @Override
-//    public void render(Graphics graphics) {
-//        entitySprites[index].render(graphics, x, y);
-//    }
-
     @Override
     public Entity clone() {
         return null;

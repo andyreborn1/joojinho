@@ -4,6 +4,9 @@ import entities.Entity;
 import entities.EntityFactory;
 import entities.EntitySprites;
 import entities.Player;
+import entities.chain.CollisionHandler;
+import entities.chain.EnemyCollisionHandler;
+import entities.chain.PlayerCollisionHandler;
 import entities.states.BuffState;
 import entities.states.NormalState;
 import graphics.Spritesheet;
@@ -41,6 +44,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public static EntitySprites buffedBullet;
     public static EntitySprites explosionES;
 
+    public static CollisionHandler collisionHandler;
+
     EnemySpawn enemySpawn;
 
     public Game() {
@@ -55,6 +60,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
         mediumEnemySprite = new Spritesheet("/spritesheets/enemy-medium.png");
         bullets = new Spritesheet("/spritesheets/laser-bolts.png");
         explosion = new Spritesheet("/spritesheets/explosion.png");
+
+        collisionHandler = new EnemyCollisionHandler();
+        collisionHandler.linkNext(new PlayerCollisionHandler());
 
 
         EntitySprites player1 = EntityFactory.getSprite("player",
