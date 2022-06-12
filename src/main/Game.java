@@ -1,9 +1,11 @@
 package main;
 
 import entities.Entity;
-import entities.EntityFactory;
+import entities.EntitySpriteFactory;
 import entities.EntitySprites;
 import entities.Player;
+import entities.factory.EntityFactory;
+import entities.factory.NormalEntityFactory;
 import entities.states.BuffState;
 import entities.states.NormalState;
 import graphics.Spritesheet;
@@ -29,17 +31,16 @@ public class Game extends Canvas implements Runnable, KeyListener {
     private BufferedImage image;
 
     public static List<Entity> entities;
-    public static Spritesheet playerSprite;
-    public static Spritesheet smallEnemySprite;
     public static Spritesheet mediumEnemySprite;
     public static Spritesheet bullets;
-    public static Spritesheet explosion;
     public static Player player;
     public static EntitySprites mediumEnemyEntitySprite;
-    public static EntitySprites enemyEntitySprite;
     public static EntitySprites normalBullet;
     public static EntitySprites buffedBullet;
-    public static EntitySprites explosionES;
+
+    public static int score;
+
+    public EntityFactory entityFactory;
 
     EnemySpawn enemySpawn;
 
@@ -50,30 +51,18 @@ public class Game extends Canvas implements Runnable, KeyListener {
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 
         entities = new ArrayList<Entity>();
-        playerSprite = new Spritesheet("/spritesheets/ship.png");
-        smallEnemySprite = new Spritesheet("/spritesheets/enemy-small.png");
         mediumEnemySprite = new Spritesheet("/spritesheets/enemy-medium.png");
         bullets = new Spritesheet("/spritesheets/laser-bolts.png");
-        explosion = new Spritesheet("/spritesheets/explosion.png");
 
-
-        EntitySprites player1 = EntityFactory.getSprite("player",
-                playerSprite.getSprite(16 * 2, 0, 16, 24));
-        EntitySprites player2 = EntityFactory.getSprite("player2",
-                playerSprite.getSprite(16 * 2, 24, 16, 24));
-
-        mediumEnemyEntitySprite = EntityFactory.getSprite(
+        mediumEnemyEntitySprite = EntitySpriteFactory.getSprite(
                 "medium_enemy", mediumEnemySprite.getSprite(0, 0, 32, 16));
 
-        explosionES = EntityFactory.getSprite("explosion",
-                explosion.getSprite(0, 0, 16, 16));
-
-        buffedBullet = EntityFactory.getSprite("buff_bullet",
+        buffedBullet = EntitySpriteFactory.getSprite("buff_bullet",
                 bullets.getSprite(0, 12, 12, 20));
 
-        player = new Player("player", Game.WIDTH / 2, Game.HEIGHT - 40, 3,
-                new EntitySprites[]{player1, player2});
-
+        entityFactory = new NormalEntityFactory();
+        player = entityFactory.createPlayer(Game.WIDTH / 2, Game.HEIGHT - 40,
+                3, 10);
         enemySpawn = new EnemySpawn();
 
         entities.add(player);
@@ -162,7 +151,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
             if (System.currentTimeMillis() - timer >= 1000) {
                 System.out.println("FPS: " + frames);
-                System.out.println("Enitidades: " + entities.size());
                 frames = 0;
                 timer += 1000;
             }

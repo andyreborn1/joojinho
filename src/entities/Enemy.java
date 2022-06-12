@@ -1,5 +1,7 @@
 package entities;
 
+import entities.factory.EntityFactory;
+import entities.factory.NormalEntityFactory;
 import main.Game;
 
 public class Enemy extends Entity {
@@ -28,7 +30,7 @@ public class Enemy extends Entity {
         if (frames == maxFrames) {
             frames = 0;
             index++;
-            int maxIndex = entitySprites.length-1;
+            int maxIndex = entitySprites.length - 1;
             if (index > maxIndex)
                 index = 0;
         }
@@ -42,20 +44,8 @@ public class Enemy extends Entity {
                     life -= ((Bullet) e).damage;
 
                     if (this.life < 1) {
-                        Explosion explosion = new Explosion("explosion",
-                                x, y, 0,
-                                new EntitySprites[]{EntityFactory.getSprite("exp0",
-                                        Game.explosion.getSprite(0, 0, 16,
-                                                16)),
-                                        EntityFactory.getSprite("exp1",
-                                                Game.explosion.getSprite(16,
-                                                        0, 16, 16)),
-                                        EntityFactory.getSprite("exp2",
-                                                Game.explosion.getSprite(16 * 2, 0, 16, 16)),
-                                        EntityFactory.getSprite("exp3",
-                                                Game.explosion.getSprite(16 * 3, 0, 16, 16)),
-                                        EntityFactory.getSprite("exp4",
-                                                Game.explosion.getSprite(16 * 4, 0, 16, 16))});
+                        EntityFactory entityFactory = new NormalEntityFactory();
+                        Explosion explosion = entityFactory.createExplosion(x, y);
 
                         Game.entities.add(explosion);
                         Game.entities.remove(this);

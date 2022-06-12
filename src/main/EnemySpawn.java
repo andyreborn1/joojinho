@@ -1,8 +1,8 @@
 package main;
 
 import entities.Enemy;
-import entities.factory.EnemyFactory;
-import entities.factory.SmallEnemyFactory;
+import entities.factory.EntityFactory;
+import entities.factory.NormalEntityFactory;
 
 import java.util.Random;
 
@@ -10,7 +10,7 @@ public class EnemySpawn {
     public int targetTime = 100;
     public int curTime = 0;
     public int time = 0;
-    EnemyFactory enemyFactory;
+    EntityFactory entityFactory;
 
     public void tick() {
         curTime++;
@@ -21,11 +21,12 @@ public class EnemySpawn {
 
             curTime = 0;
 
-            enemyFactory = new SmallEnemyFactory();
-            Enemy enemy =
-                    (Enemy) enemyFactory.createEntity(
-                            rand.nextInt(Game.WIDTH - 16), 0, 1);
-
+//            enemyFactory = new SmallEnemyFactory();
+//            Enemy enemy =
+//                    (Enemy) enemyFactory.createEntity(
+//                            rand.nextInt(Game.WIDTH - 16), 0, 1);
+            entityFactory = new NormalEntityFactory();
+            Enemy enemy = entityFactory.createEnemy(rand.nextInt(Game.WIDTH - 16), 1);
             Game.entities.add(enemy);
         }
     }

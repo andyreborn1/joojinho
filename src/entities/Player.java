@@ -7,16 +7,17 @@ import main.Game;
 public class Player extends Entity {
 
     private State state;
+    private int life;
 
     private boolean right;
     private boolean left;
 
     private int frames = 0;
 
-    public Player(String name, double x, double y, double speed,
+    public Player(String name, double x, double y, double speed, int life,
                   EntitySprites[] entitySprites) {
         super(name, x, y, speed, entitySprites);
-
+        this.life = life;
         this.state = new NormalState(this);
     }
 

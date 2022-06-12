@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EntityFactory {
+public class EntitySpriteFactory {
     static Map<String, EntitySprites> sprites = new HashMap<>();
 
     public static EntitySprites getSprite(String name, BufferedImage sprite) {
