@@ -62,7 +62,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
         entityFactory = new NormalEntityFactory();
         player = entityFactory.createPlayer(Game.WIDTH / 2, Game.HEIGHT - 40,
-                3, 10);
+                1, 10);
         enemySpawn = new EnemySpawn();
 
         entities.add(player);
@@ -134,6 +134,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         double amountOfTicks = 60.0;
         double ns = 1000000000 / amountOfTicks;
         double delta = 0;
+        int updates = 0;
         int frames = 0;
         double timer = System.currentTimeMillis();
         requestFocus();
@@ -144,15 +145,18 @@ public class Game extends Canvas implements Runnable, KeyListener {
             lastTime = now;
             if (delta >= 1) {
                 tick();
-                render();
-                frames++;
+                updates++;
                 delta--;
             }
 
-            if (System.currentTimeMillis() - timer >= 1000) {
-                System.out.println("FPS: " + frames);
-                frames = 0;
+            render();
+            frames++;
+
+            if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
+                System.out.println(updates + " Ticks, FPS: " + frames);
+                frames = 0;
+                updates = 0;
             }
 
         }
@@ -162,18 +166,18 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     @Override
     public void keyTyped(KeyEvent keyEvent) {
-
+        
     }
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
         if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
-            player.left();
+            player.setVelX(player.getSpeed());
         }
         if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
-            player.right();
+            player.setVelX(-player.getSpeed());
         }
-        if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
+        if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE && !player.isShooting()) {
             player.getState().onShot();
         }
         if (keyEvent.getKeyCode() == KeyEvent.VK_C) {
@@ -186,7 +190,15 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     @Override
     public void keyReleased(KeyEvent keyEvent) {
-
+        if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
+            player.setVelX(0);
+        }
+        if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
+            player.setVelX(0);
+        }
+        if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
+            player.setShooting(false);
+        }
     }
 }
 

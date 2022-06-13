@@ -15,6 +15,7 @@ public class BuffState extends State {
     @Override
     public void onShot() {
         player.changeState(this);
+        player.setShooting(true);
         double xx = player.getX()+5;
         double yy = player.getY();
 

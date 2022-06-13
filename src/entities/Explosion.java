@@ -2,12 +2,18 @@ package entities;
 
 import main.Game;
 
+import java.awt.*;
+
 public class Explosion extends Entity {
     private int frames = 0;
+    private int width, height;
 
     public Explosion(String name, double x, double y, double speed,
+                     int width, int height,
                      EntitySprites[] entitySprites) {
         super(name, x, y, speed, entitySprites);
+        this.width = width;
+        this.height = height;
     }
 
     public void tick() {
@@ -21,6 +27,13 @@ public class Explosion extends Entity {
             if (index > maxIndex)
                 Game.entities.remove(this);
         }
+    }
+
+    @Override
+    public void render(Graphics graphics) {
+        graphics.drawImage(entitySprites[index].sprite, (int) x, (int) y, width,
+                height,
+                null);
     }
 
     @Override

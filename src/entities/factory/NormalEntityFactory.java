@@ -30,7 +30,7 @@ public class NormalEntityFactory extends EntityFactory {
 
     @Override
     public Explosion createExplosion(double x, double y) {
-        return new Explosion("explosiom", x, y, 0,
+        return new Explosion("explosion", x, y, 0, 16, 16,
                 new EntitySprites[]{EntitySpriteFactory.getSprite("exp0",
                         explosion.getSprite(0, 0, 16,
                                 16)),

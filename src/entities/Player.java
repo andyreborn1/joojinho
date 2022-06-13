@@ -8,9 +8,9 @@ public class Player extends Entity {
 
     private State state;
     private int life;
+    private boolean isShooting = false;
 
-    private boolean right;
-    private boolean left;
+    private double velX;
 
     private int frames = 0;
 
@@ -22,6 +22,7 @@ public class Player extends Entity {
     }
 
     public void tick() {
+        x += velX;
         if (getX() > Game.WIDTH - 16) {
             setX(Game.WIDTH - 16);
         }
@@ -36,7 +37,7 @@ public class Player extends Entity {
         if (frames == maxFrames) {
             frames = 0;
             index++;
-            int maxIndex = entitySprites.length-1;
+            int maxIndex = entitySprites.length - 1;
             if (index > maxIndex)
                 index = 0;
         }
@@ -55,11 +56,15 @@ public class Player extends Entity {
         this.state = state;
     }
 
-    public void setRight(boolean right) {
-        this.right = right;
+    public void setVelX(double velX) {
+        this.velX = velX;
     }
 
-    public void setLeft(boolean left) {
-        this.left = left;
+    public boolean isShooting() {
+        return isShooting;
+    }
+
+    public void setShooting(boolean shooting) {
+        isShooting = shooting;
     }
 }
