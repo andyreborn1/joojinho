@@ -1,7 +1,6 @@
 package main;
 
 import entities.Entity;
-import entities.EntitySpriteFactory;
 import entities.EntitySprites;
 import entities.Player;
 import entities.factory.EntityFactory;
@@ -27,6 +26,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public static final int WIDTH = 160;
     public static final int HEIGHT = 240;
     public static final int SCALE = 3;
+    public static int score = 0;
 
     private BufferedImage image;
 
@@ -35,10 +35,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public static Spritesheet bullets;
     public static Player player;
     public static EntitySprites mediumEnemyEntitySprite;
-    public static EntitySprites normalBullet;
-    public static EntitySprites buffedBullet;
-
-    public static int score;
 
     public EntityFactory entityFactory;
 
@@ -51,14 +47,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 
         entities = new ArrayList<Entity>();
-        mediumEnemySprite = new Spritesheet("/spritesheets/enemy-medium.png");
+
         bullets = new Spritesheet("/spritesheets/laser-bolts.png");
-
-        mediumEnemyEntitySprite = EntitySpriteFactory.getSprite(
-                "medium_enemy", mediumEnemySprite.getSprite(0, 0, 32, 16));
-
-        buffedBullet = EntitySpriteFactory.getSprite("buff_bullet",
-                bullets.getSprite(0, 12, 12, 20));
 
         entityFactory = new NormalEntityFactory();
         player = entityFactory.createPlayer(Game.WIDTH / 2, Game.HEIGHT - 40,
@@ -155,6 +145,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
                 System.out.println(updates + " Ticks, FPS: " + frames);
+                System.out.println("Life: " + player.getLife());
+                System.out.println("Score: " + score);
                 frames = 0;
                 updates = 0;
             }
@@ -166,7 +158,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     @Override
     public void keyTyped(KeyEvent keyEvent) {
-        
+
     }
 
     @Override
@@ -174,9 +166,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
         if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
             player.setVelX(player.getSpeed());
         }
-        if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
+        else if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
             player.setVelX(-player.getSpeed());
         }
+
         if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE && !player.isShooting()) {
             player.getState().onShot();
         }

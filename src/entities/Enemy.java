@@ -4,14 +4,19 @@ import entities.factory.EntityFactory;
 import entities.factory.NormalEntityFactory;
 import main.Game;
 
+import java.util.Random;
+
 public class Enemy extends Entity {
     public int life;
     private int frames = 0;
+    Random random;
+    EntityFactory entityFactory;
 
     public Enemy(String name, double x, double y, double speed, int life,
                  EntitySprites[] entitySprites) {
         super(name, x, y, speed, entitySprites);
         this.life = life;
+        random = new Random();
     }
 
     public Enemy(Entity e) {
@@ -21,7 +26,8 @@ public class Enemy extends Entity {
     public void tick() {
         this.down();
         if (getY() > Game.HEIGHT + 16) {
-            Game.entities.remove(this);
+//            Game.entities.remove(this);
+            x = random.nextInt(Game.WIDTH);
         }
 
         frames++;
@@ -44,12 +50,22 @@ public class Enemy extends Entity {
                     life -= ((Bullet) e).damage;
 
                     if (this.life < 1) {
-                        EntityFactory entityFactory = new NormalEntityFactory();
+                        entityFactory = new NormalEntityFactory();
                         Explosion explosion = entityFactory.createExplosion(x, y);
 
                         Game.entities.add(explosion);
+                        Game.score++;
                         Game.entities.remove(this);
                     }
+                }
+            } else if (e instanceof Player) {
+                if (Entity.isColidding(this, e)) {
+                    ((Player) e).setLife(((Player) e).getLife() - 1);
+                    entityFactory = new NormalEntityFactory();
+                    Explosion explosion = entityFactory.createExplosion(x, y);
+
+                    Game.entities.add(explosion);
+                    Game.entities.remove(this);
                 }
             }
 //        }

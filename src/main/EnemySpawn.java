@@ -21,12 +21,10 @@ public class EnemySpawn {
 
             curTime = 0;
 
-//            enemyFactory = new SmallEnemyFactory();
-//            Enemy enemy =
-//                    (Enemy) enemyFactory.createEntity(
-//                            rand.nextInt(Game.WIDTH - 16), 0, 1);
             entityFactory = new NormalEntityFactory();
-            Enemy enemy = entityFactory.createEnemy(rand.nextInt(Game.WIDTH - 16), 1);
+            Enemy enemy =
+                    entityFactory.createEnemy(rand.nextInt(Game.WIDTH - 16),
+                            rand.nextInt(2)+1);
             Game.entities.add(enemy);
         }
     }

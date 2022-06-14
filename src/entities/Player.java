@@ -64,6 +64,14 @@ public class Player extends Entity {
         return isShooting;
     }
 
+    public void setLife(int life) {
+        this.life = life;
+    }
+
+    public int getLife() {
+        return life;
+    }
+
     public void setShooting(boolean shooting) {
         isShooting = shooting;
     }
