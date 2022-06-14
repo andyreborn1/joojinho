@@ -1,6 +1,8 @@
 package entities;
 
 
+import entities.visitor.Visitor;
+
 import java.awt.*;
 
 public abstract class Entity {
@@ -31,7 +33,7 @@ public abstract class Entity {
         this.entitySprites = e.entitySprites;
     }
 
-    public void render(Graphics graphics){
+    public void render(Graphics graphics) {
         entitySprites[index].render(graphics, x, y);
     }
 
@@ -50,6 +52,8 @@ public abstract class Entity {
     public abstract void tick();
 
     public abstract Entity clone();
+
+    public abstract void visit(Visitor visitor, Entity entity);
 
     public void left() {
         x += speed;

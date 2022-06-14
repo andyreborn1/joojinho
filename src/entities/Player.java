@@ -2,6 +2,7 @@ package entities;
 
 import entities.states.NormalState;
 import entities.states.State;
+import entities.visitor.Visitor;
 import main.Game;
 
 public class Player extends Entity {
@@ -46,6 +47,11 @@ public class Player extends Entity {
     @Override
     public Entity clone() {
         return null;
+    }
+
+    @Override
+    public void visit(Visitor visitor, Entity entity) {
+        visitor.forPlayer(this, (Enemy) entity);
     }
 
     public State getState() {

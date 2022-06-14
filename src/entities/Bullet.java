@@ -1,5 +1,6 @@
 package entities;
 
+import entities.visitor.Visitor;
 import main.Game;
 
 public class Bullet extends Entity {
@@ -32,13 +33,13 @@ public class Bullet extends Entity {
         }
     }
 
-//    @Override
-//    public void render(Graphics graphics) {
-//        entitySprites[index].render(graphics, x, y);
-//    }
-
     @Override
     public Entity clone() {
         return null;
+    }
+
+    @Override
+    public void visit(Visitor visitor, Entity entity) {
+        visitor.forBullet(this, (Enemy) entity);
     }
 }

@@ -165,8 +165,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public void keyPressed(KeyEvent keyEvent) {
         if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
             player.setVelX(player.getSpeed());
-        }
-        else if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
+        } else if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
             player.setVelX(-player.getSpeed());
         }
 
