@@ -15,19 +15,12 @@ public class Explosion extends Entity {
         super(name, x, y, speed, entitySprites);
         this.width = width;
         this.height = height;
+
+        maxFrames = 4;
     }
 
     public void tick() {
-        frames++;
-        int maxFrames = 4;
-
-        if (frames == maxFrames) {
-            frames = 0;
-            index++;
-            int maxIndex = entitySprites.length - 1;
-            if (index > maxIndex)
-                Game.entities.remove(this);
-        }
+        runAnimation();
     }
 
     @Override
@@ -35,6 +28,19 @@ public class Explosion extends Entity {
         graphics.drawImage(entitySprites[index].sprite, (int) x, (int) y, width,
                 height,
                 null);
+    }
+
+    @Override
+    public void runAnimation() {
+        frames++;
+
+        if (frames == maxFrames) {
+            frames = 0;
+            index++;
+
+            if (index > maxIndex)
+                Game.entities.remove(this);
+        }
     }
 
     @Override

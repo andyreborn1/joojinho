@@ -13,13 +13,12 @@ public class Player extends Entity {
 
     private double velX;
 
-    private int frames = 0;
-
     public Player(String name, double x, double y, double speed, int life,
                   EntitySprites[] entitySprites) {
         super(name, x, y, speed, entitySprites);
         this.life = life;
         this.state = new NormalState(this);
+        maxFrames = 7;
     }
 
     public void tick() {
@@ -32,16 +31,7 @@ public class Player extends Entity {
             setX(0);
         }
 
-        frames++;
-        int maxFrames = 7;
-
-        if (frames == maxFrames) {
-            frames = 0;
-            index++;
-            int maxIndex = entitySprites.length - 1;
-            if (index > maxIndex)
-                index = 0;
-        }
+        runAnimation();
     }
 
     @Override

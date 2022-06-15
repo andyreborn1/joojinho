@@ -12,25 +12,17 @@ public class Bullet extends Entity {
                   EntitySprites[] entitySprites) {
         super(name, x, y, speed, entitySprites);
         this.damage = damage;
+
+        maxFrames = 5;
     }
 
     public void tick() {
-        setY(getY() - getSpeed());
+        up();
 
         if (this.getY() < -16) {
             Game.entities.remove(this);
         }
-
-        frames++;
-        int maxFrames = 5;
-
-        if (frames == maxFrames) {
-            frames = 0;
-            index++;
-            int maxIndex = 1;
-            if (index > maxIndex)
-                index = 0;
-        }
+        runAnimation();
     }
 
     @Override

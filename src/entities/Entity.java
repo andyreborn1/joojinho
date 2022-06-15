@@ -12,6 +12,9 @@ public abstract class Entity {
     protected double speed;
 
     protected int index = 0;
+    protected int frames = 0;
+    protected int maxFrames;
+    protected int maxIndex;
 
     protected EntitySprites[] entitySprites;
 
@@ -23,6 +26,8 @@ public abstract class Entity {
         this.y = y;
         this.speed = speed;
         this.entitySprites = entitySprites;
+
+        maxIndex = entitySprites.length - 1;
     }
 
     public Entity(Entity e) {
@@ -35,6 +40,18 @@ public abstract class Entity {
 
     public void render(Graphics graphics) {
         entitySprites[index].render(graphics, x, y);
+    }
+
+    public void runAnimation() {
+        frames++;
+
+        if (frames == maxFrames) {
+            frames = 0;
+            index++;
+
+            if (index > maxIndex)
+                index = 0;
+        }
     }
 
     public static boolean isColidding(Entity e1, Entity e2) {
