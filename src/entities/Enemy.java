@@ -2,6 +2,8 @@ package entities;
 
 import entities.factory.EntityFactory;
 import entities.factory.NormalEntityFactory;
+import entities.visitor.CollisionHandler;
+import entities.visitor.Visitor;
 import main.Game;
 
 import java.util.Random;
@@ -11,12 +13,14 @@ public class Enemy extends Entity {
     private int frames = 0;
     Random random;
     EntityFactory entityFactory;
+    Visitor visitor;
 
     public Enemy(String name, double x, double y, double speed, int life,
                  EntitySprites[] entitySprites) {
         super(name, x, y, speed, entitySprites);
         this.life = life;
         random = new Random();
+        visitor = new CollisionHandler();
     }
 
     public Enemy(Entity e) {
@@ -44,31 +48,7 @@ public class Enemy extends Entity {
         for (int i = 0; i < Game.entities.size(); i++) {
             Entity e = Game.entities.get(i);
 
-            if (e instanceof Bullet) {
-                if (Entity.isColidding(this, e)) {
-                    Game.entities.remove(e);
-                    life -= ((Bullet) e).damage;
-
-                    if (this.life < 1) {
-                        entityFactory = new NormalEntityFactory();
-                        Explosion explosion = entityFactory.createExplosion(x, y);
-
-                        Game.entities.add(explosion);
-                        Game.score++;
-                        Game.entities.remove(this);
-                    }
-                }
-            } else if (e instanceof Player) {
-                if (Entity.isColidding(this, e)) {
-                    ((Player) e).setLife(((Player) e).getLife() - 1);
-                    entityFactory = new NormalEntityFactory();
-                    Explosion explosion = entityFactory.createExplosion(x, y);
-
-                    Game.entities.add(explosion);
-                    Game.entities.remove(this);
-                }
-            }
-//        }
+            e.visit(visitor, this);
         }
     }
 
@@ -78,6 +58,11 @@ public class Enemy extends Entity {
         Enemy e = new Enemy(this);
         e.setLife(this.life);
         return e;
+    }
+
+    @Override
+    public void visit(Visitor visitor, Entity entity) {
+
     }
 
     public void setLife(int life) {

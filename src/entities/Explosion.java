@@ -1,5 +1,6 @@
 package entities;
 
+import entities.visitor.Visitor;
 import main.Game;
 
 import java.awt.*;
@@ -39,5 +40,9 @@ public class Explosion extends Entity {
     @Override
     public Entity clone() {
         return null;
+    }
+
+    @Override
+    public void visit(Visitor visitor, Entity entity) {
     }
 }
