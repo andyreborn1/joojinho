@@ -2,6 +2,7 @@ package main;
 
 import entities.Enemy;
 import entities.factory.EntityFactory;
+import entities.factory.MediumEntityFactory;
 import entities.factory.NormalEntityFactory;
 
 import java.util.Random;

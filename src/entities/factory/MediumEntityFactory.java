@@ -15,12 +15,12 @@ public class MediumEntityFactory extends EntityFactory {
     @Override
     public Enemy createEnemy(double x, double speed) {
         return new Enemy(
-                "smallEnemy",
+                "mediumEnemy",
                 x, -16, speed, 6,
                 new EntitySprites[]{
-                        EntitySpriteFactory.getSprite("smallEnemy1",
+                        EntitySpriteFactory.getSprite("mediumEnemy1",
                                 enemySprite.getSprite(0, 0, 32, 16)),
-                        EntitySpriteFactory.getSprite("smallEnemy2",
+                        EntitySpriteFactory.getSprite("mediumEnemy2",
                                 enemySprite.getSprite(32, 0, 32, 16))
                 }
         );

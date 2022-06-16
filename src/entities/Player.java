@@ -18,7 +18,7 @@ public class Player extends Entity {
         super(name, x, y, speed, entitySprites);
         this.life = life;
         this.state = new NormalState(this);
-        maxFrames = 7;
+        maxFrames = 5;
     }
 
     public void tick() {

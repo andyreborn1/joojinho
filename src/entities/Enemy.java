@@ -1,6 +1,5 @@
 package entities;
 
-import entities.factory.EntityFactory;
 import entities.visitor.CollisionHandler;
 import entities.visitor.Visitor;
 import main.Game;
@@ -11,7 +10,6 @@ public class Enemy extends Entity {
     public int life;
     private int frames = 0;
     Random random;
-    EntityFactory entityFactory;
     Visitor visitor;
 
     public Enemy(String name, double x, double y, double speed, int life,
@@ -21,7 +19,7 @@ public class Enemy extends Entity {
         random = new Random();
         visitor = new CollisionHandler();
 
-        maxFrames = 7;
+        maxFrames = 5;
     }
 
     public Enemy(Entity e) {
@@ -30,6 +28,7 @@ public class Enemy extends Entity {
 
     public void tick() {
         this.down();
+
         if (getY() > Game.HEIGHT + 16) {
             x = random.nextInt(Game.WIDTH);
         }
