@@ -6,6 +6,8 @@ import entities.Player;
 import entities.factory.EntityFactory;
 import entities.factory.NormalEntityFactory;
 import entities.states.BuffState;
+import entities.states.GameState;
+import entities.states.InGameState;
 import entities.states.NormalState;
 import graphics.Spritesheet;
 
@@ -13,7 +15,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,22 +29,24 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public static final int SCALE = 3;
     public static int score = 0;
 
-    private BufferedImage image;
+    public BufferedImage image;
 
     public static List<Entity> entities;
     public static Spritesheet mediumEnemySprite;
     public static Spritesheet bullets;
     public static Player player;
     public static EntitySprites mediumEnemyEntitySprite;
+    GameState gameState;
 
     public EntityFactory entityFactory;
 
-    EnemySpawn enemySpawn;
+    public EnemySpawn enemySpawn;
 
     public Game() {
         addKeyListener(this);
         setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
         initFrame();
+        gameState = new InGameState(this);
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 
         entities = new ArrayList<Entity>();
@@ -88,37 +91,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
         game.start();
     }
 
-    public void tick() {
-        enemySpawn.tick();
-
-        for (int i = 0; i < entities.size(); i++) {
-            Entity e = entities.get(i);
-            e.tick();
-        }
-    }
-
-    public void render() {
-        BufferStrategy bs = this.getBufferStrategy();
-        if (bs == null) {
-            this.createBufferStrategy(3);
-            return;
-        }
-        Graphics g = image.getGraphics();
-        g.setColor(new Color(0, 0, 0));
-        g.fillRect(0, 0, WIDTH, HEIGHT);
-
-        for (int i = 0; i < entities.size(); i++) {
-            Entity e = entities.get(i);
-            e.render(g);
-        }
-
-        g.dispose();
-        g = bs.getDrawGraphics();
-        g.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
-
-        bs.show();
-    }
-
     public void run() {
         long lastTime = System.nanoTime();
         double amountOfTicks = 60.0;
@@ -134,12 +106,12 @@ public class Game extends Canvas implements Runnable, KeyListener {
             delta += (now - lastTime) / ns;
             lastTime = now;
             if (delta >= 1) {
-                tick();
+                gameState.tick();
                 updates++;
                 delta--;
             }
 
-            render();
+            gameState.render();
             frames++;
 
             if (System.currentTimeMillis() - timer > 1000) {
@@ -154,6 +126,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
         }
 
         stop();
+    }
+
+    public void changeState(GameState gameState) {
+        this.gameState = gameState;
     }
 
     @Override
