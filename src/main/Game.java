@@ -1,11 +1,12 @@
 package main;
 
 import entities.Entity;
-import entities.EntitySprites;
 import entities.Player;
 import entities.factory.EntityFactory;
 import entities.factory.NormalEntityFactory;
 import entities.states.BuffState;
+import entities.states.GameState;
+import entities.states.MenuState;
 import entities.states.NormalState;
 import graphics.Spritesheet;
 
@@ -13,7 +14,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,22 +28,22 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public static final int SCALE = 3;
     public static int score = 0;
 
-    private BufferedImage image;
+    public BufferedImage image;
 
     public static List<Entity> entities;
-    public static Spritesheet mediumEnemySprite;
     public static Spritesheet bullets;
     public static Player player;
-    public static EntitySprites mediumEnemyEntitySprite;
+    public GameState gameState;
 
     public EntityFactory entityFactory;
 
-    EnemySpawn enemySpawn;
+    public EnemySpawn enemySpawn;
 
     public Game() {
         addKeyListener(this);
         setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
         initFrame();
+        gameState = new MenuState(this);
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 
         entities = new ArrayList<Entity>();
@@ -53,9 +53,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
         entityFactory = new NormalEntityFactory();
         player = entityFactory.createPlayer(Game.WIDTH / 2, Game.HEIGHT - 40,
                 1, 10);
-        enemySpawn = new EnemySpawn();
-
-        entities.add(player);
     }
 
     public void initFrame() {
@@ -66,6 +63,15 @@ public class Game extends Canvas implements Runnable, KeyListener {
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+    }
+
+    public void newGame() {
+        entities.clear();
+        player = entityFactory.createPlayer(Game.WIDTH / 2, Game.HEIGHT - 40,
+                1, 10);
+        enemySpawn = new EnemySpawn();
+        entities.add(player);
+        score = 0;
     }
 
     public synchronized void start() {
@@ -88,37 +94,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
         game.start();
     }
 
-    public void tick() {
-        enemySpawn.tick();
-
-        for (int i = 0; i < entities.size(); i++) {
-            Entity e = entities.get(i);
-            e.tick();
-        }
-    }
-
-    public void render() {
-        BufferStrategy bs = this.getBufferStrategy();
-        if (bs == null) {
-            this.createBufferStrategy(3);
-            return;
-        }
-        Graphics g = image.getGraphics();
-        g.setColor(new Color(0, 0, 0));
-        g.fillRect(0, 0, WIDTH, HEIGHT);
-
-        for (int i = 0; i < entities.size(); i++) {
-            Entity e = entities.get(i);
-            e.render(g);
-        }
-
-        g.dispose();
-        g = bs.getDrawGraphics();
-        g.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
-
-        bs.show();
-    }
-
     public void run() {
         long lastTime = System.nanoTime();
         double amountOfTicks = 60.0;
@@ -134,19 +109,17 @@ public class Game extends Canvas implements Runnable, KeyListener {
             delta += (now - lastTime) / ns;
             lastTime = now;
             if (delta >= 1) {
-                tick();
+                gameState.tick();
                 updates++;
                 delta--;
             }
 
-            render();
+            gameState.render();
             frames++;
 
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
                 System.out.println(updates + " Ticks, FPS: " + frames);
-                System.out.println("Life: " + player.getLife());
-                System.out.println("Score: " + score);
                 frames = 0;
                 updates = 0;
             }
@@ -154,6 +127,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
         }
 
         stop();
+    }
+
+    public void changeState(GameState gameState) {
+        this.gameState = gameState;
     }
 
     @Override
@@ -164,9 +141,23 @@ public class Game extends Canvas implements Runnable, KeyListener {
     @Override
     public void keyPressed(KeyEvent keyEvent) {
         if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
-            player.setVelX(player.getSpeed());
-        } else if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
-            player.setVelX(-player.getSpeed());
+            gameState.right();
+        }
+
+        if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
+            gameState.left();
+        }
+
+        if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
+            gameState.up();
+        }
+
+        if (keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
+            gameState.down();
+        }
+
+        if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER) {
+            gameState.enter();
         }
 
         if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE && !player.isShooting()) {
@@ -177,6 +168,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
         }
         if (keyEvent.getKeyCode() == KeyEvent.VK_V) {
             player.changeState(new NormalState(player));
+        }
+        if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            gameState.esc();
         }
     }
 

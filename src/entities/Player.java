@@ -23,6 +23,7 @@ public class Player extends Entity {
 
     public void tick() {
         x += velX;
+
         if (getX() > Game.WIDTH - 16) {
             setX(Game.WIDTH - 16);
         }

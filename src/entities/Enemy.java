@@ -30,7 +30,8 @@ public class Enemy extends Entity {
         this.down();
 
         if (getY() > Game.HEIGHT + 16) {
-            x = random.nextInt(Game.WIDTH);
+            x = random.nextInt(Game.WIDTH-16);
+            y = -16;
         }
 
         runAnimation();
