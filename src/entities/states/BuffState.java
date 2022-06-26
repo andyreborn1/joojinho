@@ -23,7 +23,7 @@ public class BuffState extends State {
                 Game.bullets.getSprite(6, 18, 5, 12));
         EntitySprites buffedBullet2 = EntitySpriteFactory.getSprite("buffed_bullet2",
                 Game.bullets.getSprite(20, 18, 5, 12));
-        Game.entities.add(new Bullet("bullet", xx, yy, 2, 5,
+        Game.entities.add(new Bullet("bullet", xx, yy, 2, 2,
                 new EntitySprites[]{buffedBullet1, buffedBullet2}));
     }
 

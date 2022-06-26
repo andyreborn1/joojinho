@@ -2,7 +2,6 @@ package main;
 
 import entities.Enemy;
 import entities.factory.EntityFactory;
-import entities.factory.MediumEntityFactory;
 import entities.factory.NormalEntityFactory;
 
 import java.util.Random;
@@ -16,6 +15,7 @@ public class EnemySpawn {
     public void tick() {
         curTime++;
         time++;
+
         if (curTime == targetTime) {
             Random rand = new Random();
             targetTime = rand.nextInt(150);
@@ -25,7 +25,7 @@ public class EnemySpawn {
             entityFactory = new NormalEntityFactory();
             Enemy enemy =
                     entityFactory.createEnemy(rand.nextInt(Game.WIDTH - 16),
-                            rand.nextInt(2)+1);
+                            rand.nextInt(2) + 1);
             Game.entities.add(enemy);
         }
     }
