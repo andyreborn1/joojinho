@@ -16,14 +16,15 @@ public class BuffState extends State {
     public void onShot() {
         player.changeState(this);
         player.setShooting(true);
-        double xx = player.getX()+5;
+        double xx = player.getX() + 5;
         double yy = player.getY();
 
         EntitySprites buffedBullet1 = EntitySpriteFactory.getSprite("buffed_bullet1",
                 Game.bullets.getSprite(6, 18, 5, 12));
         EntitySprites buffedBullet2 = EntitySpriteFactory.getSprite("buffed_bullet2",
                 Game.bullets.getSprite(20, 18, 5, 12));
-        Game.entities.add(new Bullet("bullet", xx, yy, 2, 2,
+
+        player.getController().addEntity(new Bullet("bullet", xx, yy, 2, player.getController(), 2,
                 new EntitySprites[]{buffedBullet1, buffedBullet2}));
     }
 

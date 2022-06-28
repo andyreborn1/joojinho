@@ -2,12 +2,14 @@ package entities.factory;
 
 import entities.*;
 import graphics.Spritesheet;
+import main.Controller;
 
 public class MediumEntityFactory extends EntityFactory {
     private Spritesheet explosion;
     private Spritesheet enemySprite;
 
-    public MediumEntityFactory() {
+    public MediumEntityFactory(Controller controller) {
+        super(controller);
         enemySprite = new Spritesheet("/spritesheets/enemy-medium.png");
         explosion = new Spritesheet("/spritesheets/explosion.png");
     }
@@ -16,7 +18,7 @@ public class MediumEntityFactory extends EntityFactory {
     public Enemy createEnemy(double x, double speed) {
         return new Enemy(
                 "mediumEnemy",
-                x, -16, speed, 6,
+                x, -16, speed, controller, 6,
                 new EntitySprites[]{
                         EntitySpriteFactory.getSprite("mediumEnemy1",
                                 enemySprite.getSprite(0, 0, 32, 16)),
@@ -28,7 +30,7 @@ public class MediumEntityFactory extends EntityFactory {
 
     @Override
     public Explosion createExplosion(double x, double y) {
-        return new Explosion("explosion", x, y, 0, 32, 32,
+        return new Explosion("explosion", x, y, 0, controller, 32, 32,
                 new EntitySprites[]{EntitySpriteFactory.getSprite("exp0",
                         explosion.getSprite(0, 0, 16,
                                 16)),

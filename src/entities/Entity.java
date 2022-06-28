@@ -2,6 +2,7 @@ package entities;
 
 
 import entities.visitor.Visitor;
+import main.Controller;
 
 import java.awt.*;
 
@@ -18,13 +19,17 @@ public abstract class Entity {
 
     protected EntitySprites[] entitySprites;
 
+    protected Controller controller;
+
 
     public Entity(String name, double x, double y, double speed,
+                  Controller controller,
                   EntitySprites[] entitySprites) {
         this.name = name;
         this.x = x;
         this.y = y;
         this.speed = speed;
+        this.controller = controller;
         this.entitySprites = entitySprites;
 
         maxIndex = entitySprites.length - 1;
@@ -72,14 +77,6 @@ public abstract class Entity {
 
     public abstract void visit(Visitor visitor, Entity entity);
 
-    public void left() {
-        x += speed;
-    }
-
-    public void right() {
-        x -= speed;
-    }
-
     public void up() {
         y -= speed;
     }
@@ -100,16 +97,16 @@ public abstract class Entity {
         return speed;
     }
 
-    public void setSpeed(double speed) {
-        this.speed = speed;
-    }
-
     public void setX(double x) {
         this.x = x;
     }
 
     public void setY(double y) {
         this.y = y;
+    }
+
+    public Controller getController() {
+        return controller;
     }
 
     public void setEntitySprites(EntitySprites[] entitySprites) {
