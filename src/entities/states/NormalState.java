@@ -1,14 +1,15 @@
 package entities.states;
 
-import entities.Bullet;
-import entities.EntitySpriteFactory;
-import entities.EntitySprites;
 import entities.Player;
-import main.Game;
+import entities.builder.BulletBuilder;
+import entities.builder.Director;
 
 public class NormalState extends State {
+    Director director;
+
     public NormalState(Player player) {
         super(player);
+        director = new Director(new BulletBuilder());
     }
 
     @Override
@@ -18,12 +19,7 @@ public class NormalState extends State {
         double xx = player.getX() + 5;
         double yy = player.getY();
 
-        EntitySprites normalBullet1 = EntitySpriteFactory.getSprite("normal_bullet1",
-                Game.bullets.getSprite(6, 7, 5, 5));
-        EntitySprites normalBullet2 = EntitySpriteFactory.getSprite("normal_bullet2",
-                Game.bullets.getSprite(20, 7, 5, 5));
-
-        player.getController().addEntity(new Bullet("bullet", xx, yy, 2, player.getController(), 1,
-                new EntitySprites[]{normalBullet1, normalBullet2}));
+        director.createEnemyBullet(xx, yy, player.getController());
+        player.getController().addEntity(director.getBullet());
     }
 }
