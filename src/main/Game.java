@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game extends Canvas implements Runnable, KeyListener {
+
     private static final long serialVersionUID = 1L;
     public static JFrame frame;
     private Thread thread;
@@ -27,6 +28,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public static final int HEIGHT = 240;
     public static final int SCALE = 3;
     public static int score = 0;
+
+    private final Controller controller;
 
     public BufferedImage image;
 
@@ -43,14 +46,17 @@ public class Game extends Canvas implements Runnable, KeyListener {
         addKeyListener(this);
         setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
         initFrame();
+
+        controller = new Controller();
+
         gameState = new MenuState(this);
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 
-        entities = new ArrayList<Entity>();
+        entities = new ArrayList<>();
 
         bullets = new Spritesheet("/spritesheets/laser-bolts.png");
 
-        entityFactory = new NormalEntityFactory();
+        entityFactory = new NormalEntityFactory(controller);
         player = entityFactory.createPlayer(Game.WIDTH / 2, Game.HEIGHT - 40,
                 1, 10);
     }
@@ -66,11 +72,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
     }
 
     public void newGame() {
-        entities.clear();
+        controller.clear();
         player = entityFactory.createPlayer(Game.WIDTH / 2, Game.HEIGHT - 40,
                 1, 10);
-        enemySpawn = new EnemySpawn();
-        entities.add(player);
+        enemySpawn = new EnemySpawn(controller);
+        controller.addEntity(player);
         score = 0;
     }
 
@@ -185,6 +191,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
         if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
             player.setShooting(false);
         }
+    }
+
+    public Controller getController() {
+        return controller;
     }
 }
 

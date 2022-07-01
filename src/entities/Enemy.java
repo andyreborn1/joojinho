@@ -2,6 +2,7 @@ package entities;
 
 import entities.visitor.CollisionHandler;
 import entities.visitor.Visitor;
+import main.Controller;
 import main.Game;
 
 import java.util.Random;
@@ -12,9 +13,10 @@ public class Enemy extends Entity {
     Random random;
     Visitor visitor;
 
-    public Enemy(String name, double x, double y, double speed, int life,
+    public Enemy(String name, double x, double y, double speed,
+                 Controller controller, int life,
                  EntitySprites[] entitySprites) {
-        super(name, x, y, speed, entitySprites);
+        super(name, x, y, speed, controller, entitySprites);
         this.life = life;
         random = new Random();
         visitor = new CollisionHandler();
@@ -30,17 +32,13 @@ public class Enemy extends Entity {
         this.down();
 
         if (getY() > Game.HEIGHT + 16) {
-            x = random.nextInt(Game.WIDTH-16);
+            x = random.nextInt(Game.WIDTH - 16);
             y = -16;
         }
 
         runAnimation();
 
-        for (int i = 0; i < Game.entities.size(); i++) {
-            Entity e = Game.entities.get(i);
-
-            e.visit(visitor, this);
-        }
+        controller.checkCollision(visitor, this);
     }
 
 

@@ -1,7 +1,7 @@
 package entities;
 
 import entities.visitor.Visitor;
-import main.Game;
+import main.Controller;
 
 import java.awt.*;
 
@@ -10,9 +10,10 @@ public class Explosion extends Entity {
     private int width, height;
 
     public Explosion(String name, double x, double y, double speed,
+                     Controller controller,
                      int width, int height,
                      EntitySprites[] entitySprites) {
-        super(name, x, y, speed, entitySprites);
+        super(name, x, y, speed, controller, entitySprites);
         this.width = width;
         this.height = height;
 
@@ -39,7 +40,7 @@ public class Explosion extends Entity {
             index++;
 
             if (index > maxIndex)
-                Game.entities.remove(this);
+                controller.removeEntity(this);
         }
     }
 

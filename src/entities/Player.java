@@ -1,8 +1,10 @@
 package entities;
 
+import entities.states.BuffState;
 import entities.states.NormalState;
 import entities.states.State;
 import entities.visitor.Visitor;
+import main.Controller;
 import main.Game;
 
 public class Player extends Entity {
@@ -14,10 +16,11 @@ public class Player extends Entity {
     private double velX;
 
     public Player(String name, double x, double y, double speed, int life,
+                  Controller controller,
                   EntitySprites[] entitySprites) {
-        super(name, x, y, speed, entitySprites);
+        super(name, x, y, speed, controller, entitySprites);
         this.life = life;
-        this.state = new NormalState(this);
+        this.state = new BuffState(this);
         maxFrames = 5;
     }
 

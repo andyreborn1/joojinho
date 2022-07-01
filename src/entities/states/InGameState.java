@@ -1,6 +1,5 @@
 package entities.states;
 
-import entities.Entity;
 import main.Game;
 
 import java.awt.*;
@@ -16,16 +15,12 @@ public class InGameState extends GameState {
     public void tick() {
         game.changeState(this);
 
-        for (int i = 0; i < Game.entities.size(); i++) {
-            Entity e = Game.entities.get(i);
-            e.tick();
-        }
+        game.getController().tick();
 
         game.enemySpawn.tick();
 
         if (Game.player.getLife() < 1) {
             game.changeState(new MenuState(game));
-            Game.entities.clear();
         }
     }
 
@@ -44,28 +39,25 @@ public class InGameState extends GameState {
         g.fillRect(0, 0, Game.WIDTH, Game.HEIGHT);
 
 
-        for (int i = 0; i < Game.entities.size(); i++) {
-            Entity e = Game.entities.get(i);
-            e.render(g);
-        }
+        game.getController().render(g);
 
         g = bs.getDrawGraphics();
         g.drawImage(game.image, 0, 0, Game.WIDTH * Game.SCALE,
                 Game.HEIGHT * Game.SCALE, null);
 
         g.setColor(Color.GRAY);
-        g.fillRect(5*gs, 5*gs, 50*gs, 10*gs);
+        g.fillRect(5 * gs, 5 * gs, 50 * gs, 10 * gs);
 
         g.setColor(Color.GREEN);
-        g.fillRect(5*gs, 5*gs, Game.player.getLife() * 5*gs, 10*gs);
+        g.fillRect(5 * gs, 5 * gs, Game.player.getLife() * 5 * gs, 10 * gs);
 
         g.setColor(Color.WHITE);
-        g.drawRect(5*gs, 5*gs, 50*gs, 10*gs);
+        g.drawRect(5 * gs, 5 * gs, 50 * gs, 10 * gs);
 
 
         Font font = new Font("TimesRoman", Font.PLAIN, 15);
         g.setFont(font);
-        g.drawString(String.format("Score: %d", Game.score), 5*gs, 25*gs);
+        g.drawString(String.format("Score: %d", Game.score), 5 * gs, 25 * gs);
 
         g.dispose();
         bs.show();

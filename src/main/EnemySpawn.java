@@ -10,6 +10,12 @@ public class EnemySpawn {
     public int targetTime = 100;
     public int curTime = 0;
     public int time = 0;
+    Controller controller;
+
+    public EnemySpawn(Controller controller) {
+        this.controller = controller;
+    }
+
     EntityFactory entityFactory;
 
     public void tick() {
@@ -22,11 +28,12 @@ public class EnemySpawn {
 
             curTime = 0;
 
-            entityFactory = new NormalEntityFactory();
+            entityFactory = new NormalEntityFactory(controller);
             Enemy enemy =
                     entityFactory.createEnemy(rand.nextInt(Game.WIDTH - 16),
                             rand.nextInt(2) + 1);
-            Game.entities.add(enemy);
+
+            controller.addEntity(enemy);
         }
     }
 }
