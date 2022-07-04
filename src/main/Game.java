@@ -4,21 +4,18 @@ import entities.Entity;
 import entities.Player;
 import entities.factory.EntityFactory;
 import entities.factory.NormalEntityFactory;
-import entities.states.BuffState;
 import entities.states.GameState;
 import entities.states.MainMenuState;
-import entities.states.NormalState;
 import graphics.Spritesheet;
+import input.KeyInput;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Game extends Canvas implements Runnable, KeyListener {
+public class Game extends Canvas implements Runnable {
 
     private static final long serialVersionUID = 1L;
     public static JFrame frame;
@@ -43,7 +40,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public EnemySpawn enemySpawn;
 
     public Game() {
-        addKeyListener(this);
+        addKeyListener(new KeyInput(this));
         setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
         initFrame();
 
@@ -53,8 +50,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 
         entities = new ArrayList<>();
-
-        bullets = new Spritesheet("/spritesheets/laser-bolts.png");
 
         entityFactory = new NormalEntityFactory(controller);
         player = entityFactory.createPlayer(Game.WIDTH / 2, Game.HEIGHT - 40,
@@ -137,60 +132,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     public void changeState(GameState gameState) {
         this.gameState = gameState;
-    }
-
-    @Override
-    public void keyTyped(KeyEvent keyEvent) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent keyEvent) {
-        if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
-            gameState.right();
-        }
-
-        if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
-            gameState.left();
-        }
-
-        if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
-            gameState.up();
-        }
-
-        if (keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
-            gameState.down();
-        }
-
-        if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER) {
-            gameState.enter();
-        }
-
-        if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE && !player.isShooting()) {
-            player.getState().onShot();
-        }
-        if (keyEvent.getKeyCode() == KeyEvent.VK_C) {
-            player.changeState(new BuffState(player));
-        }
-        if (keyEvent.getKeyCode() == KeyEvent.VK_V) {
-            player.changeState(new NormalState(player));
-        }
-        if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            gameState.esc();
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent keyEvent) {
-        if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
-            player.setVelX(0);
-        }
-        if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
-            player.setVelX(0);
-        }
-        if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
-            player.setShooting(false);
-        }
     }
 
     public Controller getController() {
