@@ -1,20 +1,19 @@
 package entities.states;
 
-import graphics.GameMenu;
+import graphics.menu.GameMenu;
+import graphics.menu.PauseMenu;
 import main.Game;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
-public class PauseMenuState extends GameState{
+public class PauseMenuState extends GameState {
 
     GameMenu menu;
 
     public PauseMenuState(Game game) {
         super(game);
-        menu=new GameMenu();
-        menu.options[0] = "Continuar";
-        menu.options[1] = "Salvar Jogo";
+        menu = new PauseMenu();
     }
 
     @Override
@@ -67,12 +66,12 @@ public class PauseMenuState extends GameState{
 
     @Override
     public void enter() {
-        if (menu.currentOption == 0){
+        if (menu.currentOption == 0) {
             game.changeState(new InGameState(game));
-        }else if(menu.currentOption==1){
+        } else if (menu.currentOption == 1) {
 
-        }else if(menu.currentOption==2){
-            game.changeState(new MenuState(game));
+        } else if (menu.currentOption == 2) {
+            game.changeState(new MainMenuState(game));
         }
     }
 }

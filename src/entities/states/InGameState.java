@@ -20,7 +20,7 @@ public class InGameState extends GameState {
         game.enemySpawn.tick();
 
         if (Game.player.getLife() < 1) {
-            game.changeState(new MenuState(game));
+            game.changeState(new MainMenuState(game));
         }
     }
 

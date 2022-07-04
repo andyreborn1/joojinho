@@ -6,7 +6,7 @@ import entities.factory.EntityFactory;
 import entities.factory.NormalEntityFactory;
 import entities.states.BuffState;
 import entities.states.GameState;
-import entities.states.MenuState;
+import entities.states.MainMenuState;
 import entities.states.NormalState;
 import graphics.Spritesheet;
 
@@ -49,7 +49,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
         controller = new Controller();
 
-        gameState = new MenuState(this);
+        gameState = new MainMenuState(this);
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 
         entities = new ArrayList<>();

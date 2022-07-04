@@ -1,18 +1,19 @@
 package entities.states;
 
-import graphics.GameMenu;
+import graphics.menu.GameMenu;
+import graphics.menu.MainMenu;
 import main.Game;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
-public class MenuState extends GameState {
+public class MainMenuState extends GameState {
 
     GameMenu menu;
 
-    public MenuState(Game game) {
+    public MainMenuState(Game game) {
         super(game);
-        menu = new GameMenu();
+        menu = new MainMenu();
     }
 
     @Override
