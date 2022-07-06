@@ -24,4 +24,6 @@ public abstract class GameState {
     public abstract void esc();
 
     public abstract void enter();
+
+    public abstract void stop();
 }

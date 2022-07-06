@@ -74,4 +74,9 @@ public class PauseMenuState extends GameState {
             game.changeState(new MainMenuState(game));
         }
     }
+
+    @Override
+    public void stop() {
+
+    }
 }

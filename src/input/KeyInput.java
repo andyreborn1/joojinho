@@ -2,6 +2,7 @@ package input;
 
 import entities.states.BuffState;
 import entities.states.NormalState;
+import input.commands.*;
 import main.Game;
 
 import java.awt.event.KeyAdapter;
@@ -9,46 +10,51 @@ import java.awt.event.KeyEvent;
 
 public class KeyInput extends KeyAdapter {
     Game game;
+    Command downButton;
+    Command upButton;
+    Command rightButton;
+    Command leftButton;
+    Command enterButton;
 
     public KeyInput(Game game) {
         this.game = game;
-    }
-
-    @Override
-    public void keyTyped(KeyEvent keyEvent) {
-
+        downButton = new DownCommand(game);
+        upButton = new UpCommand(game);
+        rightButton = new RightCommand(game);
+        leftButton = new LeftCommand(game);
+        enterButton = new EnterCommand(game);
     }
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
         if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
-            game.gameState.right();
+            rightButton.execute();
         }
 
         if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
-            game.gameState.left();
+            leftButton.execute();
         }
 
         if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
-            game.gameState.up();
+            upButton.execute();
         }
 
         if (keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
-            game.gameState.down();
+            downButton.execute();
         }
 
         if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER) {
-            game.gameState.enter();
+            enterButton.execute();
         }
 
-        if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE && !Game.player.isShooting()) {
-            Game.player.getState().onShot();
+        if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE && !game.player.isShooting()) {
+            game.player.getState().onShot();
         }
         if (keyEvent.getKeyCode() == KeyEvent.VK_C) {
-            Game.player.changeState(new BuffState(Game.player));
+            game.player.changeState(new BuffState(game.player));
         }
         if (keyEvent.getKeyCode() == KeyEvent.VK_V) {
-            Game.player.changeState(new NormalState(Game.player));
+            game.player.changeState(new NormalState(game.player));
         }
         if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
             game.gameState.esc();
@@ -58,13 +64,13 @@ public class KeyInput extends KeyAdapter {
     @Override
     public void keyReleased(KeyEvent keyEvent) {
         if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
-            Game.player.setVelX(0);
+            game.gameState.stop();
         }
         if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
-            Game.player.setVelX(0);
+            game.gameState.stop();
         }
         if (keyEvent.getKeyCode() == KeyEvent.VK_SPACE) {
-            Game.player.setShooting(false);
+            game.player.setShooting(false);
         }
     }
 }

@@ -1,5 +1,6 @@
 package entities.states;
 
+import entities.Player;
 import main.Game;
 
 import java.awt.*;
@@ -7,8 +8,11 @@ import java.awt.image.BufferStrategy;
 
 public class InGameState extends GameState {
 
+    Player player;
+
     public InGameState(Game game) {
         super(game);
+        player = game.player;
     }
 
     @Override
@@ -19,7 +23,7 @@ public class InGameState extends GameState {
 
         game.enemySpawn.tick();
 
-        if (Game.player.getLife() < 1) {
+        if (player.getLife() < 1) {
             game.changeState(new MainMenuState(game));
         }
     }
@@ -49,7 +53,7 @@ public class InGameState extends GameState {
         g.fillRect(5 * gs, 5 * gs, 50 * gs, 10 * gs);
 
         g.setColor(Color.GREEN);
-        g.fillRect(5 * gs, 5 * gs, Game.player.getLife() * 5 * gs, 10 * gs);
+        g.fillRect(5 * gs, 5 * gs, player.getLife() * 5 * gs, 10 * gs);
 
         g.setColor(Color.WHITE);
         g.drawRect(5 * gs, 5 * gs, 50 * gs, 10 * gs);
@@ -82,12 +86,12 @@ public class InGameState extends GameState {
 
     @Override
     public void left() {
-        Game.player.setVelX(-Game.player.getSpeed());
+        player.setVelX(-player.getSpeed());
     }
 
     @Override
     public void right() {
-        Game.player.setVelX(Game.player.getSpeed());
+        player.setVelX(player.getSpeed());
     }
 
 
@@ -99,5 +103,10 @@ public class InGameState extends GameState {
     @Override
     public void enter() {
 
+    }
+
+    @Override
+    public void stop() {
+        player.setVelX(0);
     }
 }

@@ -79,4 +79,9 @@ public class MainMenuState extends GameState {
             System.exit(1);
         }
     }
+
+    @Override
+    public void stop() {
+
+    }
 }

@@ -1,7 +1,6 @@
 package entities;
 
 import entities.states.BuffState;
-import entities.states.NormalState;
 import entities.states.State;
 import entities.visitor.Visitor;
 import main.Controller;

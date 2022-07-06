@@ -6,7 +6,6 @@ import entities.factory.EntityFactory;
 import entities.factory.NormalEntityFactory;
 import entities.states.GameState;
 import entities.states.MainMenuState;
-import graphics.Spritesheet;
 import input.KeyInput;
 
 import javax.swing.*;
@@ -30,9 +29,7 @@ public class Game extends Canvas implements Runnable {
 
     public BufferedImage image;
 
-    public static List<Entity> entities;
-    public static Spritesheet bullets;
-    public static Player player;
+    public Player player;
     public GameState gameState;
 
     public EntityFactory entityFactory;
@@ -48,8 +45,6 @@ public class Game extends Canvas implements Runnable {
 
         gameState = new MainMenuState(this);
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-
-        entities = new ArrayList<>();
 
         entityFactory = new NormalEntityFactory(controller);
         player = entityFactory.createPlayer(Game.WIDTH / 2, Game.HEIGHT - 40,
