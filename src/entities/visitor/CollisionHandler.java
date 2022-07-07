@@ -4,7 +4,6 @@ import entities.*;
 import entities.factory.EntityFactory;
 import entities.factory.NormalEntityFactory;
 import main.Controller;
-import main.Game;
 
 public class CollisionHandler implements Visitor {
 
@@ -25,7 +24,7 @@ public class CollisionHandler implements Visitor {
                         entityFactory.createExplosion(enemy.getX(), enemy.getY());
 
                 controller.addEntity(explosion);
-                Game.score++;
+                controller.game.score = controller.game.score + enemy.getPoints();
                 controller.removeEntity(enemy);
             }
         }
@@ -36,7 +35,7 @@ public class CollisionHandler implements Visitor {
         controller = player.getController();
 
         if (Entity.isColidding(enemy, player)) {
-            player.setLife(player.getLife() - 1);
+            player.setLife(player.getLife() - enemy.getDamage());
             entityFactory = new NormalEntityFactory(controller);
             Explosion explosion = entityFactory.createExplosion(enemy.getX(),
                     enemy.getY());

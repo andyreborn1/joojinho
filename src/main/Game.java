@@ -1,18 +1,20 @@
 package main;
 
-import entities.Entity;
 import entities.Player;
 import entities.factory.EntityFactory;
 import entities.factory.NormalEntityFactory;
 import entities.states.GameState;
 import entities.states.MainMenuState;
 import input.KeyInput;
+import main.observer.EventListener;
+import main.observer.Observer;
+import main.observer.Spawn1Observer;
+import main.strategy.Context;
+import main.strategy.EnemySpawn1;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Game extends Canvas implements Runnable {
 
@@ -23,7 +25,7 @@ public class Game extends Canvas implements Runnable {
     public static final int WIDTH = 160;
     public static final int HEIGHT = 240;
     public static final int SCALE = 3;
-    public static int score = 0;
+    public int score = 0;
 
     private final Controller controller;
 
@@ -31,17 +33,20 @@ public class Game extends Canvas implements Runnable {
 
     public Player player;
     public GameState gameState;
+    public Context context;
+    public EventListener listener;
 
     public EntityFactory entityFactory;
-
-    public EnemySpawn enemySpawn;
 
     public Game() {
         addKeyListener(new KeyInput(this));
         setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
         initFrame();
 
-        controller = new Controller();
+        controller = new Controller(this);
+        listener = new EventListener();
+        Observer observer = new Spawn1Observer(this);
+        listener.subscribe(observer);
 
         gameState = new MainMenuState(this);
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
@@ -65,7 +70,8 @@ public class Game extends Canvas implements Runnable {
         controller.clear();
         player = entityFactory.createPlayer(Game.WIDTH / 2, Game.HEIGHT - 40,
                 1, 10);
-        enemySpawn = new EnemySpawn(controller);
+
+        context = new Context(new EnemySpawn1(controller));
         controller.addEntity(player);
         score = 0;
     }

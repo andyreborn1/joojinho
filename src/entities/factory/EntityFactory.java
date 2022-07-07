@@ -9,7 +9,7 @@ public abstract class EntityFactory {
 
     Controller controller;
 
-    public EntityFactory(Controller controller) {
+    protected EntityFactory(Controller controller) {
         this.controller = controller;
     }
 

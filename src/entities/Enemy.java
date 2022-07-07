@@ -9,9 +9,10 @@ import java.util.Random;
 
 public class Enemy extends Entity {
     public int life;
-    private int frames = 0;
     Random random;
     Visitor visitor;
+    private int damage;
+    private int points;
 
     public Enemy(String name, double x, double y, double speed,
                  Controller controller, int life,
@@ -20,7 +21,8 @@ public class Enemy extends Entity {
         this.life = life;
         random = new Random();
         visitor = new CollisionHandler();
-
+        damage = life / 4;
+        points = life;
         maxFrames = 5;
     }
 
@@ -51,10 +53,18 @@ public class Enemy extends Entity {
 
     @Override
     public void visit(Visitor visitor, Entity entity) {
-
+        // TODO implementar visitor da classe
     }
 
     public void setLife(int life) {
         this.life = life;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public int getPoints() {
+        return points;
     }
 }

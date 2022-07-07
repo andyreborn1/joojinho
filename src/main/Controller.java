@@ -8,9 +8,14 @@ import java.util.LinkedList;
 
 public class Controller {
 
-    LinkedList<Entity> gameObects = new LinkedList<>();
+    private LinkedList<Entity> gameObects = new LinkedList<>();
+    public Game game;
 
-    public void tick(){
+    public Controller(Game game) {
+        this.game = game;
+    }
+
+    public void tick() {
         for (int i = 0; i < gameObects.size(); i++) {
             Entity entity = gameObects.get(i);
 
@@ -18,7 +23,7 @@ public class Controller {
         }
     }
 
-    public void render(Graphics graphics){
+    public void render(Graphics graphics) {
         for (int i = 0; i < gameObects.size(); i++) {
             Entity entity = gameObects.get(i);
 
@@ -26,15 +31,15 @@ public class Controller {
         }
     }
 
-    public void addEntity(Entity entity){
+    public void addEntity(Entity entity) {
         gameObects.add(entity);
     }
 
-    public void removeEntity(Entity entity){
+    public void removeEntity(Entity entity) {
         gameObects.remove(entity);
     }
 
-    public void checkCollision(Visitor visitor, Entity entity){
+    public void checkCollision(Visitor visitor, Entity entity) {
         for (int i = 0; i < gameObects.size(); i++) {
             Entity e = gameObects.get(i);
             e.visit(visitor, entity);
@@ -42,7 +47,7 @@ public class Controller {
     }
 
 
-    public void clear(){
+    public void clear() {
         gameObects.clear();
     }
 }

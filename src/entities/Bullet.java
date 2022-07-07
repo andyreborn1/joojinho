@@ -6,7 +6,6 @@ import main.Controller;
 public class Bullet extends Entity {
 
     public int damage;
-    private int frames = 0;
 
     public Bullet(String name, double x, double y, double speed,
                   Controller controller, int damage,
@@ -28,7 +27,7 @@ public class Bullet extends Entity {
 
     @Override
     public Entity clone() {
-        return null;
+        return this;
     }
 
     @Override

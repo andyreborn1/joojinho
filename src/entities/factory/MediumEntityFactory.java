@@ -18,7 +18,7 @@ public class MediumEntityFactory extends EntityFactory {
     public Enemy createEnemy(double x, double speed) {
         return new Enemy(
                 "mediumEnemy",
-                x, -16, speed, controller, 6,
+                x, -32, speed, controller, 8,
                 new EntitySprites[]{
                         EntitySpriteFactory.getSprite("mediumEnemy1",
                                 enemySprite.getSprite(0, 0, 32, 16)),

@@ -21,11 +21,13 @@ public class InGameState extends GameState {
 
         game.getController().tick();
 
-        game.enemySpawn.tick();
+        game.context.execute();
 
         if (player.getLife() < 1) {
             game.changeState(new MainMenuState(game));
         }
+
+        game.listener.getScore(game.score);
     }
 
     @Override
@@ -61,7 +63,7 @@ public class InGameState extends GameState {
 
         Font font = new Font("TimesRoman", Font.PLAIN, 15);
         g.setFont(font);
-        g.drawString(String.format("Score: %d", Game.score), 5 * gs, 25 * gs);
+        g.drawString(String.format("Score: %d", game.score), 5 * gs, 25 * gs);
 
         g.dispose();
         bs.show();

@@ -6,7 +6,6 @@ import main.Controller;
 import java.awt.*;
 
 public class Explosion extends Entity {
-    private int frames = 0;
     private int width, height;
 
     public Explosion(String name, double x, double y, double speed,
@@ -46,10 +45,11 @@ public class Explosion extends Entity {
 
     @Override
     public Entity clone() {
-        return null;
+        return this;
     }
 
     @Override
     public void visit(Visitor visitor, Entity entity) {
+        // TODO não vai usar se pa
     }
 }

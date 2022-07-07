@@ -75,7 +75,7 @@ public class MainMenuState extends GameState {
             game.changeState(new InGameState(game));
         } else if (menu.currentOption == 1) {
 
-        } else if (menu.currentOption == 2) {
+        } else if (menu.currentOption == 3) {
             System.exit(1);
         }
     }

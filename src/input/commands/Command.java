@@ -5,7 +5,7 @@ import main.Game;
 public abstract class Command {
     Game game;
 
-    public Command(Game game) {
+    protected Command(Game game) {
         this.game = game;
     }
 

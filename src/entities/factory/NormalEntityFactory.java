@@ -22,7 +22,7 @@ public class NormalEntityFactory extends EntityFactory {
     public Enemy createEnemy(double x, double speed) {
         return new Enemy(
                 "smallEnemy",
-                x, -16, speed, controller, 3,
+                x, -16, speed, controller, 4,
                 new EntitySprites[]{
                         EntitySpriteFactory.getSprite("smallEnemy1",
                                 enemySprite.getSprite(0, 0, 16, 16)),

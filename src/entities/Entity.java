@@ -22,7 +22,7 @@ public abstract class Entity {
     protected Controller controller;
 
 
-    public Entity(String name, double x, double y, double speed,
+    protected Entity(String name, double x, double y, double speed,
                   Controller controller,
                   EntitySprites[] entitySprites) {
         this.name = name;
@@ -35,7 +35,7 @@ public abstract class Entity {
         maxIndex = entitySprites.length - 1;
     }
 
-    public Entity(Entity e) {
+    protected Entity(Entity e) {
         this.name = e.name;
         this.x = e.x;
         this.y = e.y;
